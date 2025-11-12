@@ -246,7 +246,7 @@
     </div>
     
     <script>
-        const API_URL = 'https://brainsait-api.loca.lt';
+        const API_URL = 'https://new-corners-cross.loca.lt';
         
         function setQuery(text) {
             document.getElementById('query').value = text;
@@ -275,6 +275,10 @@
             try {
                 const response = await fetch(`${API_URL}/test/generate?query=${encodeURIComponent(query)}`, {
                     method: 'POST',
+                    headers: {
+                        'bypass-tunnel-reminder': 'true',
+                        'User-Agent': 'BrainSAIT-Client/1.0'
+                    }
                 });
                 
                 if (!response.ok) {
