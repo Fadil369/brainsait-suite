@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.0.3",
+    "next": "15.4.7",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1",
     "axios": "^1.7.7",
