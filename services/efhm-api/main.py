@@ -319,6 +319,23 @@ async def startup_event():
     # TODO: Initialize Redis connection
     # TODO: Verify Gemini API access
 
+@app.post("/test/generate")
+async def test_generate(query: str):
+    """Test endpoint - Generate AI response without authentication"""
+    try:
+        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        response = model.generate_content(query)
+        return {
+            "status": "success",
+            "query": query,
+            "response": response.text,
+            "model": "gemini-2.0-flash-exp",
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        logger.error(f"Generation error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup on shutdown"""
