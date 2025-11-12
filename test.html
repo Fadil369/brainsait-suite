@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainSAIT API Test - Live Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .status {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .status-badge.online {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .query-section {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .examples {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .example-btn {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        button.submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button.submit:hover {
+            transform: translateY(-2px);
+        }
+        
+        button.submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .response-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .response-section.show {
+            display: block;
+        }
+        
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .response-title {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .response-meta {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .response-text {
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-wrap;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 BrainSAIT AI Test</h1>
+        <p class="subtitle">Healthcare AI Platform - Live Demo</p>
+        
+        <div class="status">
+            <span class="status-badge online">🟢 API Online</span>
+            <span class="status-badge online">🟢 Gemini AI Connected</span>
+        </div>
+        
+        <div class="query-section">
+            <label for="query">Ask me anything (English or Arabic):</label>
+            <input type="text" id="query" placeholder="e.g., What is diabetes? or ما هو مرض السكري؟">
+            
+            <div class="examples">
+                <button class="example-btn" onclick="setQuery('What are the symptoms of diabetes?')">English Example</button>
+                <button class="example-btn" onclick="setQuery('ما هي أعراض مرض السكري؟')">مثال بالعربية</button>
+                <button class="example-btn" onclick="setQuery('Explain hypertension in simple terms')">Medical Question</button>
+            </div>
+        </div>
+        
+        <button class="submit" onclick="sendQuery()">
+            <span id="btnText">Generate AI Response</span>
+        </button>
+        
+        <div class="response-section" id="responseSection">
+            <div class="response-header">
+                <span class="response-title">AI Response</span>
+                <span class="response-meta" id="responseMeta"></span>
+            </div>
+            <div class="response-text" id="responseText"></div>
+        </div>
+        
+        <div class="footer">
+            <p>BrainSAIT Suite v1.0.0 | Powered by <a href="http://82.25.101.65:8001/docs" target="_blank">EFHM API</a></p>
+            <p>Repository: <a href="https://github.com/Fadil369/brainsait-suite" target="_blank">github.com/Fadil369/brainsait-suite</a></p>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://82.25.101.65:8001';
+        
+        function setQuery(text) {
+            document.getElementById('query').value = text;
+        }
+        
+        async function sendQuery() {
+            const query = document.getElementById('query').value.trim();
+            if (!query) {
+                alert('Please enter a question!');
+                return;
+            }
+            
+            const submitBtn = document.querySelector('.submit');
+            const btnText = document.getElementById('btnText');
+            const responseSection = document.getElementById('responseSection');
+            const responseText = document.getElementById('responseText');
+            const responseMeta = document.getElementById('responseMeta');
+            
+            // Show loading
+            submitBtn.disabled = true;
+            btnText.textContent = 'Generating...';
+            responseSection.classList.remove('show');
+            responseText.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI is thinking...</p></div>';
+            responseSection.classList.add('show');
+            
+            try {
+                const response = await fetch(`${API_URL}/test/generate?query=${encodeURIComponent(query)}`, {
+                    method: 'POST',
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Show response
+                responseText.textContent = data.response;
+                responseMeta.textContent = `Model: ${data.model} | ${new Date(data.timestamp).toLocaleString()}`;
+                
+            } catch (error) {
+                responseText.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Generate AI Response';
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('query').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendQuery();
+            }
+        });
+    </script>
+</body>
+</html>
