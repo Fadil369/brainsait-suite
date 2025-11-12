@@ -3,7 +3,7 @@ EFHM (إفهم) API - BrainSAIT Healthcare RAG Backend
 FastAPI service with Gemini File Search integration
 """
 
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field

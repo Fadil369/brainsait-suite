@@ -5,7 +5,7 @@ services:
   api:
     build: ./services/efhm-api
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
